@@ -53,7 +53,7 @@ public class BingoCard {
         for (int i = 0; i < cardNumbers.length - 1; i++) {
             res += rowToString(i) + spacer;
         }
-        res += rowToString(cardNumbers.length - 1) + "\n";
+        res += rowToString(cardNumbers.length - 1);
         return res;
     }
 }
