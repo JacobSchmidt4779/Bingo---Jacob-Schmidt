@@ -1,5 +1,7 @@
 package Bingo;
 
+import java.util.regex.*;
+
 public class BingoCard {
     private String name;
     private int[][] cardNumbers;
@@ -10,6 +12,17 @@ public class BingoCard {
         this.name = new String();
         this.cardNumbers = new int[5][5];
         if (HAS_FREE_SPACE) this.cardNumbers[2][2] = -1;
+    }
+
+    public BingoCard(String nums) {
+        this.name = new String();
+        this.cardNumbers = new int[5][5];
+        if (HAS_FREE_SPACE) this.cardNumbers[2][2] = -1;
+        Pattern pattern = Pattern.compile("\\s*,\\s*");
+        String[] splitNums = pattern.split(nums.trim());
+        for (String target : splitNums) {
+            this.addNumber(Integer.parseInt(target));
+        }
     }
 
     public boolean addNumber(int num) {
