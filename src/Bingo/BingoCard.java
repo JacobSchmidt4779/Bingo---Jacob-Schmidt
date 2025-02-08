@@ -8,12 +8,19 @@ public class BingoCard {
 
     public static boolean HAS_FREE_SPACE = false;
 
+    /*
+     * Default constructor
+     */
     public BingoCard() {
         this.name = new String();
         this.cardNumbers = new int[5][5];
         if (HAS_FREE_SPACE) this.cardNumbers[2][2] = -1;
     }
 
+    /* 
+     * Convenience constructor that adds the numbers in the specified String to the bingo card
+     * @param String nums - a list of numbers between 1-75 separated by commas
+     */
     public BingoCard(String nums) {
         this.name = new String();
         this.cardNumbers = new int[5][5];
@@ -25,6 +32,11 @@ public class BingoCard {
         }
     }
 
+    /* 
+     * Method to add individual integers to the bingo card
+     * @param int num - an integer between 1-75 inclusive to add
+     * @return true if number was added, otherwise false
+     */
     public boolean addNumber(int num) {
         if (num <= 0 || num > 75) return false;
         int col = (int) ((num - 1) / 15);
@@ -37,6 +49,11 @@ public class BingoCard {
         return false;
     }
 
+    /* 
+     * Convenience method to add integers to the bingo card
+     * @params int args - integers between 1-75 inclusive to add
+     * @return true if all args were added, otherwise false
+     */
     public boolean addNumber(int... args) {
         boolean res = true;
         for (int num : args){
@@ -45,20 +62,34 @@ public class BingoCard {
         return res;
     }
 
-    private String numFormat(int i, int j) {
-        if (cardNumbers[i][j] == -1) return "FS";
-        return String.format("%-2d", cardNumbers[i][j]);
+    /* 
+     * Convenience method to convert an integer to a formatted String to improve appearance when printed
+     * @param int num - integer to format
+     * @return String with length 2 of the specified num or FS (Free Space) if specified num equals -1
+     */
+    private static String numFormat(int num) {
+        if (num == -1) return "FS";
+        return String.format("%-2d", num);
     }
 
+    /* 
+     * Convenience method to convert a row of integers to a formatted String to improve appearance when printed
+     * @param int i - index of row in cardNumbers to convert
+     * @return String with a standardized length
+     */
     private String rowToString(int i){
         String res = "";
         for (int j = 0; j < cardNumbers[i].length - 1; j++) {
-            res += numFormat(i, j) + "|";
+            res += numFormat(cardNumbers[i][j]) + "|";
         }
-        res += numFormat(i, cardNumbers[i].length - 1);
+        res += numFormat(cardNumbers[i][cardNumbers[i].length - 1]);
         return res;
     }
 
+    /* 
+     * Converts this bingo card to a formatted String to improve appearance when printed
+     * @return String to display
+     */
     @Override
     public String toString() {
         String spacer = "\n--+--+--+--+--\n";
