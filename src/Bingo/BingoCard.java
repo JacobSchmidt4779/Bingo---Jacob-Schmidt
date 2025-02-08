@@ -1,9 +1,11 @@
 package Bingo;
 
 import java.util.regex.*;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.File;
 
 public class BingoCard {
-    private String name;
     private int[][] cardNumbers;
 
     public static boolean HAS_FREE_SPACE = false;
@@ -12,7 +14,6 @@ public class BingoCard {
      * Default constructor
      */
     public BingoCard() {
-        this.name = new String();
         this.cardNumbers = new int[5][5];
         if (HAS_FREE_SPACE) this.cardNumbers[2][2] = -1;
     }
@@ -22,14 +23,48 @@ public class BingoCard {
      * @param String nums - a list of numbers between 1-75 separated by commas
      */
     public BingoCard(String nums) {
-        this.name = new String();
         this.cardNumbers = new int[5][5];
         if (HAS_FREE_SPACE) this.cardNumbers[2][2] = -1;
-        Pattern pattern = Pattern.compile("\\s*,\\s*");
+        Pattern pattern = Pattern.compile("(?<=\\d)\\s*,\\s*(?=\\d)");
         String[] splitNums = pattern.split(nums.trim());
         for (String target : splitNums) {
             this.addNumber(Integer.parseInt(target));
         }
+    }
+
+    /* 
+     * Convenience method that constructs an Array List of bingo cards from a formatted text file
+     * @param String fileName - the name of the file to construct bingo cards from
+     * @return ArrayList<BingoCard> containing the bingo cards constructed
+     */
+    public static ArrayList<BingoCard> createCardsFromFile(String fileName) {
+        ArrayList<BingoCard> cards = new ArrayList<>();
+        try {
+            File file = new File(fileName);
+            Scanner scan = new Scanner(file);
+            Pattern numPattern = Pattern.compile("[\\s\\d,]*");
+            String currentCardNums = "";
+            while(scan.hasNextLine()) {
+                String currentLine = scan.nextLine().trim();
+                if (!currentLine.isEmpty()){
+                    if (currentLine.startsWith("Card") && !currentCardNums.isEmpty()) {
+                        cards.add(new BingoCard(currentCardNums.substring(0, currentCardNums.length() - 1)));
+                        currentCardNums = "";
+                    } 
+                    else {
+                        Matcher numMatcher = numPattern.matcher(currentLine);
+                        if (numMatcher.matches()) {
+                            currentCardNums += currentLine + ",";
+                        }                        
+                    }
+                }
+            }
+            scan.close();
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+        return cards;
     }
 
     /* 
@@ -93,7 +128,7 @@ public class BingoCard {
     @Override
     public String toString() {
         String spacer = "\n--+--+--+--+--\n";
-        String res = this.name + "\n" + "B |I |N |G |O " + spacer;
+        String res = "B |I |N |G |O " + spacer;
         for (int i = 0; i < cardNumbers.length - 1; i++) {
             res += rowToString(i) + spacer;
         }
