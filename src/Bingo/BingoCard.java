@@ -7,6 +7,7 @@ import java.io.File;
 
 public class BingoCard {
     private int[][] cardNumbers;
+    private boolean[][] markedSpots;
 
     public static boolean HAS_FREE_SPACE = false;
 
@@ -15,7 +16,12 @@ public class BingoCard {
      */
     public BingoCard() {
         this.cardNumbers = new int[5][5];
-        if (HAS_FREE_SPACE) this.cardNumbers[2][2] = -1;
+        this.markedSpots = new boolean[5][5];
+        if (HAS_FREE_SPACE) {
+            this.cardNumbers[2][2] = -1; 
+            this.markedSpots[2][2] = true;
+        }
+
     }
 
     /* 
@@ -24,7 +30,10 @@ public class BingoCard {
      */
     public BingoCard(String nums) {
         this.cardNumbers = new int[5][5];
-        if (HAS_FREE_SPACE) this.cardNumbers[2][2] = -1;
+        if (HAS_FREE_SPACE) {
+            this.cardNumbers[2][2] = -1;
+            this.markedSpots[2][2] = true;
+        }
         Pattern pattern = Pattern.compile("(?<=\\d)\\s*,\\s*(?=\\d)");
         String[] splitNums = pattern.split(nums.trim());
         for (String target : splitNums) {
