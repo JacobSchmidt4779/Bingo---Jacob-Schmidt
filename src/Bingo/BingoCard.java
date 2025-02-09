@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.io.File;
 
 public class BingoCard {
-    private int[][] cardNumbers;
-    private boolean[][] markedSpots;
+    private int[][] cardNumbers;        // Contains the numbers on the bingo card
+    private boolean[][] markedSpots;    // Designates if a spot on the card has been marked
 
-    public static boolean HAS_FREE_SPACE = false;
+    public static boolean HAS_FREE_SPACE = false;   // If true, changes new card construction so the center square (at row 2, col 2) is a 'Free Space'
 
     /*
      * Default constructor
