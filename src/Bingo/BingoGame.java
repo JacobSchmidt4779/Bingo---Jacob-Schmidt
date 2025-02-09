@@ -1,6 +1,7 @@
 package Bingo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class BingoGame {
     private ArrayList<Integer> calledNums;
@@ -8,13 +9,11 @@ public class BingoGame {
     public BingoGame() {
         this.calledNums = new ArrayList<Integer>();
     }
-
-    public int getIndexOfOrderedInsert(int t, int low, int high) {
+    
+    private int getIndexOfOrderedInsert(int t, int low, int high) {
 		int half = (Integer) ((high-low)/2) + low;
-        if(t == calledNums.get(low) || t == calledNums.get(high)) {
-            return -1;
-        }
-		if(half == low) {
+        System.out.println("t: " + t + " low: " + low + " high: " + high + " mid: " + half);
+		if(high == low) {
             if (t > calledNums.get(high)) {
                 return high + 1;
             }
@@ -39,9 +38,20 @@ public class BingoGame {
         if(insertIndex == -1) return false;
         if(insertIndex >= calledNums.size()) {
             calledNums.addLast(num);
+            System.out.println();
             return true;
         }
         calledNums.add(insertIndex, num);
         return true;
+    }
+
+    @Override
+    public String toString() {
+        String res = "";
+        Iterator<Integer> itr = calledNums.iterator();
+        for(int i = 0; i < calledNums.size(); i++) {
+            res += itr.next() + " ";
+        }
+        return res;
     }
 }

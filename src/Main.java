@@ -12,10 +12,13 @@ public class Main {
         //     System.out.println(target + "\n");
         // }
         BingoGame game = new BingoGame();
-        System.out.println("1,2,3,4,5,8");
-        System.out.println(game.getIndexOfOrderedInsert(0, 0, 5));
-        System.out.println(game.getIndexOfOrderedInsert(6, 0, 5));
-        System.out.println(game.getIndexOfOrderedInsert(9, 0, 5));
-        System.out.println(game.getIndexOfOrderedInsert(3, 0, 5));
+        game.addToCalledNums(2);
+        game.addToCalledNums(1);
+        game.addToCalledNums(5);
+        game.addToCalledNums(3);
+        game.addToCalledNums(4);
+        game.addToCalledNums(3);
+        game.addToCalledNums(5);
+        System.out.println(game);
     }
 }
