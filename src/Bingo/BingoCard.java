@@ -17,6 +17,7 @@ public class BingoCard {
     public BingoCard() {
         this.cardNumbers = new int[5][5];
         this.markedSpots = new boolean[5][5];
+        // Arrays.stream(markedSpots).forEach(target -> Arrays.fill(target, false));
         if (HAS_FREE_SPACE) {
             this.cardNumbers[2][2] = -1; 
             this.markedSpots[2][2] = true;
@@ -30,6 +31,7 @@ public class BingoCard {
      */
     public BingoCard(String nums) {
         this.cardNumbers = new int[5][5];
+        this.markedSpots = new boolean[5][5];
         if (HAS_FREE_SPACE) {
             this.cardNumbers[2][2] = -1;
             this.markedSpots[2][2] = true;
@@ -106,14 +108,19 @@ public class BingoCard {
         return res;
     }
 
+    public void markSpot(int i, int j) {
+        this.markedSpots[i][j] = true;
+    }
+
     /* 
      * Convenience method to convert an integer to a formatted String to improve appearance when printed
      * @param int num - integer to format
      * @return String with length 2 of the specified num or FS (Free Space) if specified num equals -1
      */
-    private static String numFormat(int num) {
-        if (num == -1) return "FS";
-        return String.format("%-2d", num);
+    private String numFormat(int i, int j) {
+        if (cardNumbers[i][j] == -1) return "\u001B[31mFS\u001B[0m";
+        if (markedSpots[i][j] == true) return "\u001B[31m" + String.format("%-2d", cardNumbers[i][j]) + "\u001B[0m";
+        return String.format("%-2d", cardNumbers[i][j]);
     }
 
     /* 
@@ -124,9 +131,9 @@ public class BingoCard {
     private String rowToString(int i){
         String res = "";
         for (int j = 0; j < cardNumbers[i].length - 1; j++) {
-            res += numFormat(cardNumbers[i][j]) + "|";
+            res += numFormat(i, j) + "|";
         }
-        res += numFormat(cardNumbers[i][cardNumbers[i].length - 1]);
+        res += numFormat(i, cardNumbers[i].length - 1);
         return res;
     }
 
