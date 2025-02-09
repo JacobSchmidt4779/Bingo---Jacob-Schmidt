@@ -12,7 +12,6 @@ public class BingoGame {
     
     private int getIndexOfOrderedInsert(int t, int low, int high) {
 		int half = (Integer) ((high-low)/2) + low;
-        System.out.println("t: " + t + " low: " + low + " high: " + high + " mid: " + half);
 		if(high == low) {
             if (t > calledNums.get(high)) {
                 return high + 1;
@@ -38,7 +37,6 @@ public class BingoGame {
         if(insertIndex == -1) return false;
         if(insertIndex >= calledNums.size()) {
             calledNums.addLast(num);
-            System.out.println();
             return true;
         }
         calledNums.add(insertIndex, num);
