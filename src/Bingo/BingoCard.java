@@ -108,13 +108,19 @@ public class BingoCard {
         return res;
     }
 
+    /* 
+     * Method to mark a spot on a bingo card
+     * @param int i - row that contains the spot to mark
+     * @param int j - column that contains the spot to mark
+     */
     public void markSpot(int i, int j) {
         this.markedSpots[i][j] = true;
     }
 
     /* 
      * Convenience method to convert an integer to a formatted String to improve appearance when printed
-     * @param int num - integer to format
+     * @param int i - row that contains the integer
+     * @param int j - column that contains the integer
      * @return String with length 2 of the specified num or FS (Free Space) if specified num equals -1
      */
     private String numFormat(int i, int j) {
