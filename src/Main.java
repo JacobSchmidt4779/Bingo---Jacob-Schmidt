@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import Bingo.BingoCard;
 import Bingo.BingoGame;
 
@@ -12,13 +10,8 @@ public class Main {
         //     System.out.println(target + "\n");
         // }
         BingoGame game = new BingoGame();
-        game.addToCalledNums(2);
-        game.addToCalledNums(1);
-        game.addToCalledNums(5);
-        game.addToCalledNums(3);
-        game.addToCalledNums(4);
-        game.addToCalledNums(3);
-        game.addToCalledNums(5);
-        System.out.println(game);
+        for (int i = 0; i < 75; i ++) {
+            System.out.println("Rand num: " + game.generateNumber() + " called: " + game);
+        }
     }
 }

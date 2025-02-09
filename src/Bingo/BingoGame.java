@@ -16,10 +16,13 @@ public class BingoGame {
             if (t > calledNums.get(high)) {
                 return high + 1;
             }
+            if (t == calledNums.get(high)) {
+                return -1;
+            }
 			return low;
 		}
 		if(t < calledNums.get(half)) {
-			return getIndexOfOrderedInsert(t, low, half - 1);
+			return getIndexOfOrderedInsert(t, low, half);
 		}
 		if(t > calledNums.get(half)) {
 			return getIndexOfOrderedInsert(t, half + 1, high);
@@ -41,6 +44,17 @@ public class BingoGame {
         }
         calledNums.add(insertIndex, num);
         return true;
+    }
+
+    public int generateNumber() {
+        if(calledNums.size() == 75) return -1;
+        int res = (int) (Math.random() * (75 - calledNums.size())) + 1;
+        boolean cont = true;
+        while (cont) {
+            cont = !addToCalledNums(res);
+            res = ((res + 1) % 75) + 1;
+        }
+        return res;
     }
 
     @Override
