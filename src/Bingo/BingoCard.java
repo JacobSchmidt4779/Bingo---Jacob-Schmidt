@@ -11,6 +11,7 @@ public class BingoCard {
 
     public static boolean HAS_FREE_SPACE = false;   // If true, changes new card construction so the center square (at row 2, col 2) is a 'Free Space'
 
+    public static final String Spacer = "--+--+--+--+--";   // String to be used to separate bingo card rows when printing
     /*
      * Default constructor
      */
@@ -134,7 +135,7 @@ public class BingoCard {
      * @param int i - index of row in cardNumbers to convert
      * @return String with a standardized length
      */
-    private String rowToString(int i){
+    public String rowToString(int i){
         String res = "";
         for (int j = 0; j < cardNumbers[i].length - 1; j++) {
             res += numFormat(i, j) + "|";
@@ -149,10 +150,9 @@ public class BingoCard {
      */
     @Override
     public String toString() {
-        String spacer = "\n--+--+--+--+--\n";
-        String res = "B |I |N |G |O " + spacer;
+        String res = "B |I |N |G |O " + "\n" + Spacer + "\n";
         for (int i = 0; i < cardNumbers.length - 1; i++) {
-            res += rowToString(i) + spacer;
+            res += rowToString(i) + "\n" + Spacer + "\n";
         }
         res += rowToString(cardNumbers.length - 1);
         return res;
