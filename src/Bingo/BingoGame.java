@@ -22,7 +22,7 @@ public class BingoGame {
         Scanner scan = new Scanner(System.in);
         String ans = "";
 
-        while (ans != "random" || ans != "manual") {
+        while (ans != "random" && ans != "manual") {
             ans = scan.nextLine().trim();
         }
 
@@ -43,7 +43,7 @@ public class BingoGame {
         do {
             ans = scan.nextLine().trim();
             match = numPattern.matcher(ans);
-        } while (match.matches());
+        } while (!match.matches());
     }
 
     public void playManualGame() {
