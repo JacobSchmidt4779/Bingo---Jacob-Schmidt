@@ -125,6 +125,17 @@ public class BingoCard {
     }
 
     /* 
+     * Convenience method to convert a char representing a bingo column to its respective column
+     * @param char bingoCol - character that represents a column on a bingo (a char contained in 'bingo'), ignoring case
+     * @return int representation of the column character
+     */
+    public static int charToCol(char bingoCol) {
+        int res = ((int) bingoCol) - 60 - ((bingoCol > 'O') ? 1 : 0) * 32;
+        res = (int) (0.0282 * Math.pow(res, 3) - 1.0485 * Math.pow(res, 2) + 12.09 * res - 40);
+        return res;
+    }
+
+    /* 
      * Convenience method to convert an integer to a formatted String to improve appearance when printed
      * @param int i - row that contains the integer
      * @param int j - column that contains the integer
