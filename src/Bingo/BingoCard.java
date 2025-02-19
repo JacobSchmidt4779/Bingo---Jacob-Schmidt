@@ -164,7 +164,7 @@ public class BingoCard {
      */
     private String numFormat(int i, int j) {
         if (cardNumbers[i][j] == -1) return "\u001B[31mFS\u001B[0m";
-        if (markedSpots[i][j] == true) return "\u001B[31m" + String.format("%-2d", cardNumbers[i][j]) + "\u001B[0m";
+        if (markedSpots[i][j] == true) return "\u001B[31mXX\u001B[0m";
         return String.format("%-2d", cardNumbers[i][j]);
     }
 
