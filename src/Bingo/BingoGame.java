@@ -51,7 +51,7 @@ public class BingoGame {
 
         generateBingoCards(Integer.parseInt(ans));
         
-        while (promptToMarkNumber())
+        while (promptToMarkMultCards())
             System.out.println();
 
         if (cards.size() == 0) {
@@ -63,7 +63,7 @@ public class BingoGame {
         scan.close();
     }
 
-    public boolean promptToMarkNumber() {
+    public boolean promptToMarkMultCards() {
         Scanner scan = new Scanner(System.in);
         int number =generateNumber();
 
@@ -108,7 +108,59 @@ public class BingoGame {
     }
 
     public void playManualGame() {
-        //TODO
+        ArrayList<BingoCard> pool = BingoCard.createCardsFromFile("BingoCards.txt");
+        for (BingoCard target : pool) {
+            System.out.println(target + "\n");
+        }
+        System.out.println("Please select the bingo card you wish to play with by entering its number");
+        Scanner scan = new Scanner(System.in);
+        Pattern numPattern = Pattern.compile("^([1-" + pool.size() + "])$");
+        String ans = scan.nextLine().trim();
+        Matcher match = numPattern.matcher(ans);
+        
+        while (!match.matches()) {
+            ans = scan.nextLine().trim();
+            match = numPattern.matcher(ans);
+        }
+
+        System.out.println("Selected Card #" + ans + "\n");
+
+        cards.add(pool.get(Integer.parseInt(ans) - 1));
+
+        promptToMarkSingleCard();
+    }
+
+    public void promptToMarkSingleCard() {
+        Scanner scan = new Scanner(System.in);
+
+        BingoCard card = cards.getFirst();
+
+        System.out.println(card);
+        System.out.println("Enter the Row and Column (eg BB) of a number to mark or 'bingo' if you have a bingo");
+        String ans = scan.nextLine().trim().toUpperCase();
+
+
+        while (true){
+            if (card.getNumberAt(ans) == -1) {
+                System.out.println("Not a valid coordinate!");
+            } 
+            else if (ans.equals("BINGO")) {
+                if (!card.checkBingo()) {
+                    System.out.println("Card does not have bingo!");
+                }
+                else {
+                    System.out.println("You win!");
+                    return;
+                }
+            }
+            else {
+                card.markSpot(ans);
+                System.out.println(card);
+                System.out.println("Spot " + ans + " marked");
+            }
+
+            ans = scan.nextLine().trim().toUpperCase();
+        }
     }
     
     /* 
