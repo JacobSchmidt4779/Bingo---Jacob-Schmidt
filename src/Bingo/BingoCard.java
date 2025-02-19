@@ -150,18 +150,18 @@ public class BingoCard {
      * @param char bingoCol - character that represents a column on a bingo (a char contained in 'bingo'), ignoring case
      * @return int representation of the column character
      */
-    public static int charToCol(char bingoCol) {
+    private static int charToCol(char bingoCol) {
         int res = ((int) bingoCol) - 60 - ((bingoCol > 'O') ? 1 : 0) * 32;
         res = (int) (0.0282 * Math.pow(res, 3) - 1.0485 * Math.pow(res, 2) + 12.09 * res - 40);
         return res;
     }
 
-    public static char getCharForNum(int num) {
+    private static char getCharForNum(int num) {
         num = (int) (num / 15.1);
         return ("BINGO").charAt(num);
     }
 
-    public static char getCharForCol(int col){
+    private static char getCharForCol(int col){
         return ("BINGO").charAt(col);
     }
 
