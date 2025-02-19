@@ -30,6 +30,12 @@ public class BingoCard {
 
     }
 
+    public BingoCard(BingoCard card) {
+        this.id = card.id;
+        this.cardNumbers = card.cardNumbers;
+        this.markedSpots = new boolean[5][5];
+    }
+
     /* 
      * Convenience constructor that adds the numbers in the specified String to the bingo card
      * @param String nums - a list of numbers between 1-75 separated by commas
@@ -146,7 +152,7 @@ public class BingoCard {
     }
 
     public void markSpot(String rowCol) {
-        if (Pattern.matches("^\s*[bingo][bingo]\s*$", rowCol)) {
+        if (Pattern.matches("^\s*[BINGObingo][BINGObingo]\s*$", rowCol)) {
             int row = charToCol(rowCol.charAt(0));
             int col = charToCol(rowCol.charAt(1));
             markSpot(row, col);

@@ -49,7 +49,7 @@ public class BingoGame {
 
         System.out.println("Selected " + ans + " card(s)\n");
 
-        generateBingoCards(Integer.parseInt(ans));
+        generateBingoCards(Integer.parseInt(ans) - 1);
         
         while (promptToMarkMultCards())
             System.out.println();
@@ -74,9 +74,9 @@ public class BingoGame {
             System.out.println("Number rolled: " + BingoCard.numToString(number));
             System.out.println(cards.get(i));
             System.out.println("Enter the Row and Column (eg BB) of a number to mark, 'next' to continue to the next card, or 'bingo' if you have a bingo");
-            String ans = scan.nextLine().trim();
+            String ans = scan.nextLine().trim().toUpperCase();
 
-            while (!ans.equals("next") && !ans.equals("bingo")){
+            while (!ans.equals("NEXT") && !ans.equals("BINGO")){
 
                 if (cards.get(i).getNumberAt(ans) == -1) {
                     System.out.println("Not a valid coordinate!");
@@ -90,9 +90,9 @@ public class BingoGame {
                     System.out.println("Spot " + ans + " marked");
                 }
 
-                ans = scan.nextLine().trim();
+                ans = scan.nextLine().trim().toUpperCase();
             }
-            if (ans.equals("bingo")) {
+            if (ans.equals("BINGO")) {
                 if (!cards.get(i).checkBingo()) {
                     System.out.println("Card does not have bingo! Card discarded...Continuing with next card");
                     cards.remove(i);
@@ -108,13 +108,13 @@ public class BingoGame {
     }
 
     public void playManualGame() {
-        ArrayList<BingoCard> pool = BingoCard.createCardsFromFile("BingoCards.txt");
-        for (BingoCard target : pool) {
-            System.out.println(target + "\n");
+        cards = BingoCard.createCardsFromFile("BingoCards.txt");
+        for (int i = 0; i < cards.size(); i++) {
+            System.out.println(cards.get(i) + "\n");
         }
         System.out.println("Please select the bingo card you wish to play with by entering its number");
         Scanner scan = new Scanner(System.in);
-        Pattern numPattern = Pattern.compile("^([1-" + pool.size() + "])$");
+        Pattern numPattern = Pattern.compile("^([1-" + cards.size() + "])$");
         String ans = scan.nextLine().trim();
         Matcher match = numPattern.matcher(ans);
         
@@ -125,15 +125,13 @@ public class BingoGame {
 
         System.out.println("Selected Card #" + ans + "\n");
 
-        cards.add(pool.get(Integer.parseInt(ans) - 1));
-
-        promptToMarkSingleCard();
+        promptToMarkSingleCard(Integer.parseInt(ans));
     }
 
-    public void promptToMarkSingleCard() {
+    public void promptToMarkSingleCard(int cardNum) {
         Scanner scan = new Scanner(System.in);
 
-        BingoCard card = cards.getFirst();
+        BingoCard card = cards.remove(cardNum);
 
         System.out.println(card);
         System.out.println("Enter the Row and Column (eg BB) of a number to mark or 'bingo' if you have a bingo");
