@@ -15,7 +15,7 @@ public class Main {
         System.out.println(card);
         System.out.println(card.checkBingo());
 
-        System.out.println(card.getNumberAt("BI"));
+        System.out.println(BingoCard.numToString(card.getNumberAt("BI")));
         // for (BingoCard target : cards) {
         //     System.out.println(target + "\n");
         // }

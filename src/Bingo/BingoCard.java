@@ -138,11 +138,11 @@ public class BingoCard {
 
     /* 
      * Method to mark a spot on a bingo card
-     * @param int i - row that contains the spot to mark
-     * @param int j - column that contains the spot to mark
+     * @param int row - row that contains the spot to mark
+     * @param int col - column that contains the spot to mark
      */
-    public void markSpot(int i, int j) {
-        this.markedSpots[i][j] = true;
+    public void markSpot(int row, int col) {
+        this.markedSpots[row][col] = true;
     }
 
     /* 
@@ -181,10 +181,14 @@ public class BingoCard {
      * @param int j - column that contains the integer
      * @return String with length 2 of the specified num or FS (Free Space) if specified num equals -1
      */
-    private String numFormat(int i, int j) {
-        if (cardNumbers[i][j] == -1) return "\u001B[31mFS\u001B[0m";
-        if (markedSpots[i][j] == true) return "\u001B[31mXX\u001B[0m";
-        return String.format("%-2d", cardNumbers[i][j]);
+    private String numFormat(int row, int col) {
+        if (cardNumbers[row][col] == -1) return "\u001B[31mFS\u001B[0m";
+        if (markedSpots[row][col] == true) return "\u001B[31mXX\u001B[0m";
+        return String.format("%-2d", cardNumbers[row][col]);
+    }
+
+    public static String numToString(int num) {
+        return getCharForNum(num) + "" + num;
     }
 
     /* 
