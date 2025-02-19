@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.io.File;
 
 public class BingoCard {
+    private static int idIndex = 1;
+    private int id;
     private int[][] cardNumbers;        // Contains the numbers on the bingo card
     private boolean[][] markedSpots;    // Designates if a spot on the card has been marked
 
@@ -16,6 +18,8 @@ public class BingoCard {
      * Default constructor
      */
     public BingoCard() {
+        this.id = idIndex;
+        idIndex++;
         this.cardNumbers = new int[5][5];
         this.markedSpots = new boolean[5][5];
         // Arrays.stream(markedSpots).forEach(target -> Arrays.fill(target, false));
@@ -31,6 +35,8 @@ public class BingoCard {
      * @param String nums - a list of numbers between 1-75 separated by commas
      */
     public BingoCard(String nums) {
+        this.id = idIndex;
+        idIndex++;
         this.cardNumbers = new int[5][5];
         this.markedSpots = new boolean[5][5];
         if (HAS_FREE_SPACE) {
