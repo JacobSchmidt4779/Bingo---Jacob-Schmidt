@@ -139,12 +139,8 @@ public class BingoGame {
         System.out.println("Enter the Row and Column (eg BB) of a number to mark or 'bingo' if you have a bingo");
         String ans = scan.nextLine().trim().toUpperCase();
 
-
-        while (true){
-            if (card.getNumberAt(ans) == -1) {
-                System.out.println("Not a valid coordinate!");
-            } 
-            else if (ans.equals("BINGO")) {
+        while (!ans.equals("QUIT")){
+            if (ans.equals("BINGO")) {
                 if (!card.checkBingo()) {
                     System.out.println("Card does not have bingo!");
                 }
@@ -153,6 +149,9 @@ public class BingoGame {
                     return;
                 }
             }
+            else if (card.getNumberAt(ans) == -1) {
+                System.out.println("Not a valid coordinate!");
+            } 
             else {
                 card.markSpot(ans);
                 System.out.println(card);
