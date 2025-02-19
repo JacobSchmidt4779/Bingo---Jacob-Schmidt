@@ -115,6 +115,27 @@ public class BingoCard {
         return res;
     }
 
+    public boolean checkBingo() {
+        for (int row = 0; row < markedSpots.length; row++) {
+            boolean res = true;
+            for (int col = 0; col < markedSpots[0].length; col++) {
+                res = res && markedSpots[row][col];
+            }
+            if (res) return res;
+        }
+        
+        if (markedSpots[0][0] || markedSpots[4][0]) {
+            boolean downward = true;
+            boolean upward = true;
+            for(int i = 1; i < markedSpots.length; i++){
+                downward = downward && markedSpots[i][i];
+                upward = upward && markedSpots[i][4 - i];
+            }
+            return downward || upward;
+        }
+        return false;
+    }
+
     /* 
      * Method to mark a spot on a bingo card
      * @param int i - row that contains the spot to mark
