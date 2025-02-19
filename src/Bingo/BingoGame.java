@@ -15,6 +15,7 @@ public class BingoGame {
      */
     public BingoGame() {
         this.calledNums = new ArrayList<Integer>();
+        this.cards = new ArrayList<BingoCard>();
     }
 
     public void StartGame() {
@@ -22,11 +23,11 @@ public class BingoGame {
         Scanner scan = new Scanner(System.in);
         String ans = "";
 
-        while (ans != "random" && ans != "manual") {
+        while (!(ans.equals("random") || ans.equals("manual"))) {
             ans = scan.nextLine().trim();
         }
+        System.out.println("Selected: " + ans + "\n");
 
-        scan.close();
 
         if (ans.equals("random")) 
             playRandomGame();
@@ -35,15 +36,75 @@ public class BingoGame {
     }
 
     public void playRandomGame() {
-        System.out.println("How many bingo cards would you like to play with?\nEnter a number from 1 to a max of 4 bingo cards");
-        String ans = "";
+        System.out.println("How many bingo cards would you like to play with?\nEnter an amount from 1 to a max of 4 bingo cards");
         Scanner scan = new Scanner(System.in);
         Pattern numPattern = Pattern.compile("^([1-4])$");
-        Matcher match;
-        do {
+        String ans = scan.nextLine().trim();
+        Matcher match = numPattern.matcher(ans);
+        
+        while (!match.matches()) {
             ans = scan.nextLine().trim();
             match = numPattern.matcher(ans);
-        } while (!match.matches());
+        }
+
+        System.out.println("Selected " + ans + " card(s)\n");
+
+        generateBingoCards(Integer.parseInt(ans));
+        
+        while (promptToMarkNumber())
+            System.out.println();
+
+        if (cards.size() == 0) {
+            System.out.println("You lost!");
+        }
+        else {
+            System.out.println("You win!");
+        }
+        scan.close();
+    }
+
+    public boolean promptToMarkNumber() {
+        Scanner scan = new Scanner(System.in);
+        int number =generateNumber();
+
+        if (cards.size() == 0) 
+            return false;
+
+        for (int i = 0; i < cards.size(); i++) {
+            System.out.println("Number rolled: " + BingoCard.numToString(number));
+            System.out.println(cards.get(i));
+            System.out.println("Enter the Row and Column (eg BB) of a number to mark, 'next' to continue to the next card, or 'bingo' if you have a bingo");
+            String ans = scan.nextLine().trim();
+
+            while (!ans.equals("next") && !ans.equals("bingo")){
+
+                if (cards.get(i).getNumberAt(ans) == -1) {
+                    System.out.println("Not a valid coordinate!");
+                } 
+                else if (cards.get(i).getNumberAt(ans) != number){
+                    System.out.println("Selected number (" + cards.get(i).getNumberAt(ans) + ") does not match number rolled!");
+                }
+                else {
+                    cards.get(i).markSpot(ans);
+                    System.out.println(cards.get(i));
+                    System.out.println("Spot " + ans + " marked");
+                }
+
+                ans = scan.nextLine().trim();
+            }
+            if (ans.equals("bingo")) {
+                if (!cards.get(i).checkBingo()) {
+                    System.out.println("Card does not have bingo! Card discarded...Continuing with next card");
+                    cards.remove(i);
+                    i--;
+                }
+                else {
+                    return false;
+                }
+            }
+
+        }
+        return true;
     }
 
     public void playManualGame() {

@@ -56,7 +56,7 @@ public class BingoCard {
      * @return ArrayList<BingoCard> containing the bingo cards constructed
      */
     public static ArrayList<BingoCard> createCardsFromFile(String fileName) {
-        ArrayList<BingoCard> cards = new ArrayList<>();
+        ArrayList<BingoCard> cards = new ArrayList<BingoCard>();
         try {
             File file = new File(fileName);
             Scanner scan = new Scanner(file);
@@ -145,6 +145,15 @@ public class BingoCard {
         this.markedSpots[row][col] = true;
     }
 
+    public void markSpot(String rowCol) {
+        if (Pattern.matches("^\s*[bingo][bingo]\s*$", rowCol)) {
+            int row = charToCol(rowCol.charAt(0));
+            int col = charToCol(rowCol.charAt(1));
+            markSpot(row, col);
+        }
+
+    }
+
     /* 
      * Convenience method to convert a char representing a bingo column to its respective column
      * @param char bingoCol - character that represents a column on a bingo (a char contained in 'bingo'), ignoring case
@@ -210,15 +219,12 @@ public class BingoCard {
      */
     @Override
     public String toString() {
-
-        String res = "";
-        // res += " ----------------- \n";
+        String res = "Bingo Card #" + id + "\n";
         res += "  |B |I |N |G |O |" + Spacer;
         for (int i = 0; i < cardNumbers.length - 1; i++) {
             res += rowToString(i) + Spacer;
         }
         res += rowToString(cardNumbers.length - 1); 
-        // res += "\n ----------------- ";
         return res;
     }
 }

@@ -6,16 +6,9 @@ import Bingo.BingoGame;
 public class Main {
     public static void main(String[] args) {
         BingoCard.HAS_FREE_SPACE = false;
-        BingoCard card = BingoCard.createCardsFromFile("BingoCards.txt").get(0);
+        BingoGame game = new BingoGame();
+        game.StartGame();
         
-        for (int col = 0; col < 5; col++) {
-            card.markSpot(col, 4 - col);
-            card.markSpot(4, col);
-        }
-        System.out.println(card);
-        System.out.println(card.checkBingo());
-
-        System.out.println(BingoCard.numToString(card.getNumberAt("BI")));
         // for (BingoCard target : cards) {
         //     System.out.println(target + "\n");
         // }
