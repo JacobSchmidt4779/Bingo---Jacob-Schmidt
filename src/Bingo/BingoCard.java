@@ -161,6 +161,20 @@ public class BingoCard {
         return ("BINGO").charAt(num);
     }
 
+    public static char getCharForCol(int col){
+        return ("BINGO").charAt(col);
+    }
+
+    public int getNumberAt(String rowCol) {
+
+        if (!Pattern.matches("^\s*[bingo][bingo]\s*$", rowCol)) {
+            return -1;
+        }
+        int row = charToCol(rowCol.charAt(0));
+        int col = charToCol(rowCol.charAt(1));
+        return cardNumbers[row][col];
+    }
+
     /* 
      * Convenience method to convert an integer to a formatted String to improve appearance when printed
      * @param int i - row that contains the integer
