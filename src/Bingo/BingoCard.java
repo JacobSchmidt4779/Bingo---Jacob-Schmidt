@@ -13,7 +13,7 @@ public class BingoCard {
 
     public static boolean HAS_FREE_SPACE = false;   // If true, changes new card construction so the center square (at row 2, col 2) is a 'Free Space'
 
-    public static final String Spacer = "\n|--+--+--+--+--|\n";   // String to be used to separate bingo card rows when printing
+    public static final String Spacer = "\n--|--+--+--+--+--|\n";   // String to be used to separate bingo card rows when printing
     /*
      * Default constructor
      */
@@ -166,7 +166,7 @@ public class BingoCard {
     }
 
     public int getNumberAt(String rowCol) {
-
+        rowCol = rowCol.trim().toLowerCase();
         if (!Pattern.matches("^\s*[bingo][bingo]\s*$", rowCol)) {
             return -1;
         }
@@ -193,7 +193,7 @@ public class BingoCard {
      * @return String with a standardized length
      */
     public String rowToString(int i){
-        String res = "|";
+        String res = getCharForCol(i) + " |";
         for (int j = 0; j < cardNumbers[i].length; j++) {
             res += numFormat(i, j) + "|";
         }
@@ -207,11 +207,14 @@ public class BingoCard {
     @Override
     public String toString() {
 
-        String res = " -------------- \n|B |I |N |G |O |" + Spacer;
+        String res = "";
+        // res += " ----------------- \n";
+        res += "  |B |I |N |G |O |" + Spacer;
         for (int i = 0; i < cardNumbers.length - 1; i++) {
             res += rowToString(i) + Spacer;
         }
-        res += rowToString(cardNumbers.length - 1) + "\n -------------- ";
+        res += rowToString(cardNumbers.length - 1); 
+        // res += "\n ----------------- ";
         return res;
     }
 }
