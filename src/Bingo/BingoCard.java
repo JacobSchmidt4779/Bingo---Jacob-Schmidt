@@ -203,7 +203,7 @@ public class BingoCard {
      */
     private String numFormat(int row, int col) {
         if (spaces[row][col].matchNumber(-1)) return "\u001B[31mFS\u001B[0m";
-        if (spaces[row][col].isChecked()) return "\u001B[31mXX\u001B[0m";
+        if (spaces[row][col].isMarked()) return "\u001B[31mXX\u001B[0m";
         return String.format("%-2d", spaces[row][col].getNumber());
     }
 
