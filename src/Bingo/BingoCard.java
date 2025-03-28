@@ -8,8 +8,7 @@ import java.io.File;
 public class BingoCard {
     private static int idIndex = 1;
     private int id;
-    private int[][] cardNumbers;        // Contains the numbers on the bingo card
-    private boolean[][] markedSpots;    // Designates if a spot on the card has been marked
+    private BingoCardSpace spaces[][];
 
     public static boolean HAS_FREE_SPACE = false;   // If true, changes new card construction so the center square (at row 2, col 2) is a 'Free Space'
 
@@ -20,21 +19,18 @@ public class BingoCard {
     public BingoCard() {
         this.id = idIndex;
         idIndex++;
-        this.cardNumbers = new int[5][5];
-        this.markedSpots = new boolean[5][5];
-        // Arrays.stream(markedSpots).forEach(target -> Arrays.fill(target, false));
+        this.spaces = new BingoCardSpace[5][5];
         if (HAS_FREE_SPACE) {
-            this.cardNumbers[2][2] = -1; 
-            this.markedSpots[2][2] = true;
+            this.spaces[2][2] = new BingoCardSpace(-1);
+            this.spaces[2][2].mark();
         }
-
     }
 
-    public BingoCard(BingoCard card) {
-        this.id = card.id;
-        this.cardNumbers = card.cardNumbers;
-        this.markedSpots = new boolean[5][5];
-    }
+    // public BingoCard(BingoCard card) {
+    //     this.id = card.id;
+    //     this.cardNumbers = card.cardNumbers;
+    //     this.markedSpots = new boolean[5][5];
+    // }
 
     /* 
      * Convenience constructor that adds the numbers in the specified String to the bingo card
@@ -43,14 +39,16 @@ public class BingoCard {
     public BingoCard(String nums) {
         this.id = idIndex;
         idIndex++;
-        this.cardNumbers = new int[5][5];
-        this.markedSpots = new boolean[5][5];
+        this.spaces = new BingoCardSpace[5][5];
+
         if (HAS_FREE_SPACE) {
-            this.cardNumbers[2][2] = -1;
-            this.markedSpots[2][2] = true;
+            this.spaces[2][2] = new BingoCardSpace(-1);
+            this.spaces[2][2].mark();
         }
+
         Pattern pattern = Pattern.compile("(?<=\\d)\\s*,\\s*(?=\\d)");
         String[] splitNums = pattern.split(nums.trim());
+
         for (String target : splitNums) {
             this.addNumber(Integer.parseInt(target));
         }
@@ -99,9 +97,10 @@ public class BingoCard {
     public boolean addNumber(int num) {
         if (num <= 0 || num > 75) return false;
         int col = (int) ((num - 1) / 15);
-        for (int i = 0; i < cardNumbers.length; i++){
-            if (cardNumbers[i][col] == 0) {
-                   cardNumbers[i][col] = num;
+        
+        for (int i = 0; i < spaces.length; i++){
+            if (spaces[i][col].matchNumber(0)) {
+                   spaces[i][col].setNumber(num);
                 return true;
             }
         }
@@ -121,26 +120,27 @@ public class BingoCard {
         return res;
     }
 
-    public boolean checkBingo() {
-        for (int row = 0; row < markedSpots.length; row++) {
-            boolean res = true;
-            for (int col = 0; col < markedSpots[0].length; col++) {
-                res = res && markedSpots[row][col];
-            }
-            if (res) return res;
-        }
+    // This will now be handled by a different class
+    // public boolean checkBingo() {
+    //     for (int row = 0; row < spaces.length; row++) {
+    //         boolean res = true;
+    //         for (int col = 0; col < spaces[0].length; col++) {
+    //             res = res && x[row][col];
+    //         }
+    //         if (res) return res;
+    //     }
         
-        if (markedSpots[0][0] || markedSpots[4][0]) {
-            boolean downward = true;
-            boolean upward = true;
-            for(int i = 1; i < markedSpots.length; i++){
-                downward = downward && markedSpots[i][i];
-                upward = upward && markedSpots[i][4 - i];
-            }
-            return downward || upward;
-        }
-        return false;
-    }
+    //     if (markedSpots[0][0] || markedSpots[4][0]) {
+    //         boolean downward = true;
+    //         boolean upward = true;
+    //         for(int i = 1; i < markedSpots.length; i++){
+    //             downward = downward && markedSpots[i][i];
+    //             upward = upward && markedSpots[i][4 - i];
+    //         }
+    //         return downward || upward;
+    //     }
+    //     return false;
+    // }
 
     /* 
      * Method to mark a spot on a bingo card
@@ -148,11 +148,12 @@ public class BingoCard {
      * @param int col - column that contains the spot to mark
      */
     public void markSpot(int row, int col) {
-        this.markedSpots[row][col] = true;
+        this.spaces[row][col].mark();
     }
 
     public void markSpot(String rowCol) {
-        if (Pattern.matches("^\s*[BINGObingo][BINGObingo]\s*$", rowCol)) {
+        rowCol = rowCol.trim().toLowerCase();
+        if (Pattern.matches("^\s*[bingo][bingo]\s*$", rowCol)) {
             int row = charToCol(rowCol.charAt(0));
             int col = charToCol(rowCol.charAt(1));
             markSpot(row, col);
@@ -171,10 +172,10 @@ public class BingoCard {
         return res;
     }
 
-    private static char getCharForNum(int num) {
-        num = (int) (num / 15.1);
-        return ("BINGO").charAt(num);
-    }
+    // private static char getCharForNum(int num) {
+    //     num = (int) (num / 15.1);
+    //     return ("BINGO").charAt(num);
+    // }
 
     private static char getCharForCol(int col){
         return ("BINGO").charAt(col);
@@ -187,7 +188,7 @@ public class BingoCard {
         }
         int row = charToCol(rowCol.charAt(0));
         int col = charToCol(rowCol.charAt(1));
-        return cardNumbers[row][col];
+        return spaces[row][col].getNumber();
     }
 
     /* 
@@ -197,14 +198,14 @@ public class BingoCard {
      * @return String with length 2 of the specified num or FS (Free Space) if specified num equals -1
      */
     private String numFormat(int row, int col) {
-        if (cardNumbers[row][col] == -1) return "\u001B[31mFS\u001B[0m";
-        if (markedSpots[row][col] == true) return "\u001B[31mXX\u001B[0m";
-        return String.format("%-2d", cardNumbers[row][col]);
+        if (spaces[row][col].matchNumber(-1)) return "\u001B[31mFS\u001B[0m";
+        if (spaces[row][col].isChecked()) return "\u001B[31mXX\u001B[0m";
+        return String.format("%-2d", spaces[row][col].getNumber());
     }
 
-    public static String numToString(int num) {
-        return getCharForNum(num) + "" + num;
-    }
+    // public static String numToString(int num) {
+    //     return getCharForNum(num) + "" + num;
+    // }
 
     /* 
      * Convenience method to convert a row of integers to a formatted String to improve appearance when printed
@@ -213,7 +214,7 @@ public class BingoCard {
      */
     public String rowToString(int i){
         String res = getCharForCol(i) + " |";
-        for (int j = 0; j < cardNumbers[i].length; j++) {
+        for (int j = 0; j < spaces[i].length; j++) {
             res += numFormat(i, j) + "|";
         }
         return res;
@@ -227,10 +228,10 @@ public class BingoCard {
     public String toString() {
         String res = "Bingo Card #" + id + "\n";
         res += "  |B |I |N |G |O |" + Spacer;
-        for (int i = 0; i < cardNumbers.length - 1; i++) {
+        for (int i = 0; i < spaces.length - 1; i++) {
             res += rowToString(i) + Spacer;
         }
-        res += rowToString(cardNumbers.length - 1); 
+        res += rowToString(spaces.length - 1); 
         return res;
     }
 }
