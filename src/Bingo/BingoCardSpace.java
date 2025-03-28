@@ -2,24 +2,24 @@ package Bingo;
 
 public class BingoCardSpace {
     private int number;
-    private boolean checked;
+    private boolean marked;
 
     public BingoCardSpace() {
         number = 0;
-        checked = false;
+        marked = false;
     }
 
     public BingoCardSpace(int setNumber) {
         number = setNumber;
-        checked = false;
+        marked = false;
     }
 
     public int getNumber() {
         return number;
     }
 
-    public boolean isChecked() {
-        return checked;
+    public boolean isMarked() {
+        return marked;
     }
 
     public void setNumber(int number) {
@@ -27,7 +27,7 @@ public class BingoCardSpace {
     }
 
     public void mark() {
-        checked = true;
+        marked = true;
     }
 
     public boolean matchNumber(int numberToMatch) {
