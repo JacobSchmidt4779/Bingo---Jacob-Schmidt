@@ -191,6 +191,10 @@ public class BingoCard {
         return spaces[row][col].getNumber();
     }
 
+    public BingoCardSpace[][] getSpaces() {
+        return spaces;
+    }
+
     /* 
      * Convenience method to convert an integer to a formatted String to improve appearance when printed
      * @param int i - row that contains the integer
