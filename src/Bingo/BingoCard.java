@@ -19,18 +19,12 @@ public class BingoCard {
     public BingoCard() {
         this.id = idIndex;
         idIndex++;
-        this.spaces = new BingoCardSpace[5][5];
+        this.spaces = BingoCard.defaultSpaces();
         if (HAS_FREE_SPACE) {
             this.spaces[2][2] = new BingoCardSpace(-1);
             this.spaces[2][2].mark();
         }
     }
-
-    // public BingoCard(BingoCard card) {
-    //     this.id = card.id;
-    //     this.cardNumbers = card.cardNumbers;
-    //     this.markedSpots = new boolean[5][5];
-    // }
 
     /* 
      * Convenience constructor that adds the numbers in the specified String to the bingo card
@@ -39,7 +33,7 @@ public class BingoCard {
     public BingoCard(String nums) {
         this.id = idIndex;
         idIndex++;
-        this.spaces = new BingoCardSpace[5][5];
+        this.spaces = BingoCard.defaultSpaces();
 
         if (HAS_FREE_SPACE) {
             this.spaces[2][2] = new BingoCardSpace(-1);
@@ -52,6 +46,18 @@ public class BingoCard {
         for (String target : splitNums) {
             this.addNumber(Integer.parseInt(target));
         }
+    }
+
+    private static BingoCardSpace[][] defaultSpaces() {
+        BingoCardSpace[][] spaces = new BingoCardSpace[5][5];
+
+        for (int row = 0; row < spaces.length; row++) {
+            for (int col = 0; col < spaces[0].length; col++) {
+                spaces[row][col] = new BingoCardSpace();
+            }
+        }
+
+        return spaces;
     }
 
     /* 
@@ -89,35 +95,27 @@ public class BingoCard {
         return cards;
     }
 
-    /* 
-     * Method to add individual integers to the bingo card
-     * @param int num - an integer between 1-75 inclusive to add
-     * @return true if number was added, otherwise false
-     */
-    public boolean addNumber(int num) {
-        if (num <= 0 || num > 75) return false;
+    public BingoCard addNumber(int num) {
+        BingoCard card = new BingoCard();
         int col = (int) ((num - 1) / 15);
         
-        for (int i = 0; i < spaces.length; i++){
+        for (int i = 0; i < spaces.length; i++) {
             if (spaces[i][col].matchNumber(0)) {
-                   spaces[i][col].setNumber(num);
-                return true;
+                   spaces[i][col] = new BingoCardSpace(num);
             }
         }
-        return false;
+
+        return card;
     }
 
-    /* 
-     * Convenience method to add integers to the bingo card
-     * @params int args - integers between 1-75 inclusive to add
-     * @return true if all args were added, otherwise false
-     */
-    public boolean addNumber(int... args) {
-        boolean res = true;
+    public BingoCard addNumber(int... args) {
+        BingoCard card = new BingoCard();
+
         for (int num : args){
-            res = res & addNumber(num);
+            card = card.addNumber(num);
         }
-        return res;
+
+        return card;
     }
 
     // This will now be handled by a different class
