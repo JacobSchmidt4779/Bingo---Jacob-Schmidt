@@ -128,8 +128,8 @@ public class BingoCard {
     }
 
     public void markSpace(String rowCol) {
-        rowCol = rowCol.trim().toLowerCase();
-        if (Pattern.matches("^\s*[bingo][bingo]\s*$", rowCol)) {
+        rowCol = rowCol.trim().toUpperCase();
+        if (Pattern.matches("^\s*[BINGO][BINGO]\s*$", rowCol)) {
             int row = charToCol(rowCol.charAt(0));
             int col = charToCol(rowCol.charAt(1));
             markSpace(row, col);
@@ -168,8 +168,8 @@ public class BingoCard {
     }
 
     public int getNumberAt(String rowCol) {
-        rowCol = rowCol.trim().toLowerCase();
-        if (!Pattern.matches("^\s*[bingo][bingo]\s*$", rowCol)) {
+        rowCol = rowCol.trim().toUpperCase();
+        if (!Pattern.matches("^\s*[BINGO][BINGO]\s*$", rowCol)) {
             return -1;
         }
         int row = charToCol(rowCol.charAt(0));
