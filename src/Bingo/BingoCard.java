@@ -147,23 +147,23 @@ public class BingoCard {
      * @param int row - row that contains the spot to mark
      * @param int col - column that contains the spot to mark
      */
-    public void markSpot(int row, int col) {
+    public void markSpace(int row, int col) {
         this.spaces[row][col].mark();
     }
 
-    public void markSpot(String rowCol) {
+    public void markSpace(String rowCol) {
         rowCol = rowCol.trim().toLowerCase();
         if (Pattern.matches("^\s*[bingo][bingo]\s*$", rowCol)) {
             int row = charToCol(rowCol.charAt(0));
             int col = charToCol(rowCol.charAt(1));
-            markSpot(row, col);
+            markSpace(row, col);
         }
 
     }
 
-    public void markSpot(String... args) {
+    public void markSpace(String... args) {
         for (String target : args) {
-            markSpot(target);
+            markSpace(target);
         }
     }
 
