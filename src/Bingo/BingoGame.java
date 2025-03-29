@@ -24,6 +24,7 @@ public class BingoGame {
 
     public void StartGame() {
         System.out.println("What game mode would you like to play: random or manual?");
+        @SuppressWarnings("resource")
         Scanner scan = new Scanner(System.in);
         String ans = "";
 
@@ -68,6 +69,7 @@ public class BingoGame {
     }
 
     public boolean promptToMarkMultCards() {
+        @SuppressWarnings("resource")
         Scanner scan = new Scanner(System.in);
         int number =generateNumber();
 
@@ -123,6 +125,7 @@ public class BingoGame {
             System.out.println(cards.get(i) + "\n");
         }
         System.out.println("Please select the bingo card you wish to play with by entering its number");
+        @SuppressWarnings("resource")
         Scanner scan = new Scanner(System.in);
         Pattern numPattern = Pattern.compile("^([1-" + cards.size() + "])$");
         String ans = scan.nextLine().trim();
@@ -139,6 +142,7 @@ public class BingoGame {
     }
 
     public void promptToMarkSingleCard(int cardNum) {
+        @SuppressWarnings("resource")
         Scanner scan = new Scanner(System.in);
 
         BingoCard card = cards.remove(cardNum);
