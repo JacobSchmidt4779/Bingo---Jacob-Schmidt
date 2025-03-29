@@ -1,7 +1,10 @@
-package Bingo;
+package BingoPatterns;
+
+import Bingo.BingoCard;
+import Bingo.BingoCardSpace;
 
 public class BingoRowPattern {
-    
+
     public static boolean checkBingo(BingoCard card) {
         BingoCardSpace[][] spaces = card.getSpaces();
 

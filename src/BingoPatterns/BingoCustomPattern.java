@@ -1,6 +1,8 @@
-package Bingo;
+package BingoPatterns;
 
 import java.util.ArrayList;
+
+import Bingo.BingoCard;
 
 public class BingoCustomPattern {
 

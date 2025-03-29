@@ -1,4 +1,7 @@
-package Bingo;
+package BingoPatterns;
+
+import Bingo.BingoCard;
+import Bingo.BingoCardSpace;
 
 public class BingoColumnPattern {
 
