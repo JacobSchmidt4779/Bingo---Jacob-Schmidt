@@ -161,6 +161,12 @@ public class BingoCard {
 
     }
 
+    public void markSpot(String... args) {
+        for (String target : args) {
+            markSpot(target);
+        }
+    }
+
     public boolean isSpaceMarkedAt(int row, int col) {
         return spaces[row][col].isMarked();
     }
