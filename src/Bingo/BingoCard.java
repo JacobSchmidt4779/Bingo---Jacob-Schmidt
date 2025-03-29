@@ -161,6 +161,10 @@ public class BingoCard {
 
     }
 
+    public boolean isSpaceMarkedAt(int row, int col) {
+        return spaces[row][col].isMarked();
+    }
+
     /* 
      * Convenience method to convert a char representing a bingo column to its respective column
      * @param char bingoCol - character that represents a column on a bingo (a char contained in 'bingo'), ignoring case
@@ -189,6 +193,10 @@ public class BingoCard {
         int row = charToCol(rowCol.charAt(0));
         int col = charToCol(rowCol.charAt(1));
         return spaces[row][col].getNumber();
+    }
+
+    public boolean numberMatchAt (int row, int col, int match) {
+        return spaces[row][col].matchNumber(match);
     }
 
     public BingoCardSpace[][] getSpaces() {
