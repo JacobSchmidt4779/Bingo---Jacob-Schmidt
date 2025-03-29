@@ -6,6 +6,10 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import BingoPatterns.BingoColumnPattern;
+import BingoPatterns.BingoDiagonalPattern;
+import BingoPatterns.BingoRowPattern;
+
 public class BingoGame {
     private ArrayList<Integer> calledNums;  // ArrayList to hold all previously called numbers
     private ArrayList<BingoCard> cards;     // ArrayList to hold 1 to 4
@@ -85,7 +89,7 @@ public class BingoGame {
                     System.out.println("Selected number (" + cards.get(i).getNumberAt(ans) + ") does not match number rolled!");
                 }
                 else {
-                    cards.get(i).markSpot(ans);
+                    cards.get(i).markSpace(ans);
                     System.out.println(cards.get(i));
                     System.out.println("Spot " + ans + " marked");
                 }
@@ -93,7 +97,13 @@ public class BingoGame {
                 ans = scan.nextLine().trim().toUpperCase();
             }
             if (ans.equals("BINGO")) {
-                if (!cards.get(i).checkBingo()) {
+                if (
+                        !BingoRowPattern.checkBingo(cards.get(i))
+                        &&
+                        !BingoColumnPattern.checkBingo(cards.get(i))
+                        &&
+                        !BingoDiagonalPattern.checkBingo(cards.get(i))
+                    ) {
                     System.out.println("Card does not have bingo! Card discarded...Continuing with next card");
                     cards.remove(i);
                     i--;
@@ -139,7 +149,12 @@ public class BingoGame {
 
         while (!ans.equals("QUIT")){
             if (ans.equals("BINGO")) {
-                if (!card.checkBingo()) {
+                if (
+                    !BingoRowPattern.checkBingo(card)
+                    &&
+                    !BingoColumnPattern.checkBingo(card)
+                    &&
+                    !BingoDiagonalPattern.checkBingo(card)) {
                     System.out.println("Card does not have bingo!");
                 }
                 else {
@@ -151,7 +166,7 @@ public class BingoGame {
                 System.out.println("Not a valid coordinate!");
             } 
             else {
-                card.markSpot(ans);
+                card.markSpace(ans);
                 System.out.println(card);
                 System.out.println("Spot " + ans + " marked");
             }
