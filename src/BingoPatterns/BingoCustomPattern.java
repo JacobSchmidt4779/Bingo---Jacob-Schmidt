@@ -1,19 +1,15 @@
 package BingoPatterns;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import Bingo.BingoCard;
 
 public class BingoCustomPattern {
 
-    public class Coordinate {
+    private class Coordinate {
         private int row;
         private int col;
-
-        public Coordinate() {
-            row = -1;
-            col = -1;
-        }
 
         public Coordinate(int setRow, int setCol) {
             row = setRow;
@@ -36,18 +32,19 @@ public class BingoCustomPattern {
         return true;
     }
 
-    public boolean addCoord(Coordinate coord) {
-        if (coord.row < 0 || coord.row > 4 || coord.col < 0 || coord.col > 4) {
-            return false;
-        }
+    public void addCoord(String rowCol) {
+        rowCol = rowCol.trim().toUpperCase();
 
-        patternCoordinates.add(coord);
-        return true;
+        if (Pattern.matches("^\s*[BINGO][BINGO]\s*$", rowCol)) {
+            int row = BingoCard.charToCol(rowCol.charAt(0));
+            int col = BingoCard.charToCol(rowCol.charAt(1));
+            patternCoordinates.add(new Coordinate(row, col));
+        }
     }
 
-    public void addCoords(Coordinate... args) {
-        for (Coordinate target : args) {
-            patternCoordinates.add(target);
+    public void addCoords(String... rowCol) {
+        for (String target : rowCol) {
+            addCoord(target);
         }
     }
 
