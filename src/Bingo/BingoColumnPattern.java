@@ -6,15 +6,18 @@ public class BingoColumnPattern implements BingoPattern {
         BingoCardSpace[][] spaces = card.getSpaces();
 
         for (int col = 0; col < spaces.length; col++) {
-            boolean res = true;
-
-            for (int row = 0; row < spaces[0].length; row++) {
-                res = res && spaces[row][col].isMarked();
-            }
-
-            if (res)
-                return res;
+            if (checkCol(col, spaces))
+                return true;
         }
+
         return false;
+    }
+
+    private boolean checkCol(int col, BingoCardSpace[][] spaces) {
+        for (int row = 0; row < spaces.length; row++) {
+            if (!spaces[row][col].isMarked())
+                return false;
+        }
+        return true;
     }
 }
