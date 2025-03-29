@@ -1,5 +1,6 @@
 package BingoPatterns;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,23 +23,30 @@ public class BingoRowPatternTest {
 
     // bingo
     @Test
-    void testCheckBingoFirstRowMarked() {
+    void testCheckBingoP1() {
         card.markSpace("bb", "bi" , "bn", "bg", "bo");
         
         assertTrue(BingoRowPattern.checkBingo(card));
     }
 
     @Test
-    void testCheckBingoSecondRowMarked() {
+    void testCheckBingoP2() {
         card.markSpace("nb", "ni", "nn", "ng", "no");
 
         assertTrue(BingoRowPattern.checkBingo(card));
     }
 
     @Test 
-    void testCheckBingoThirdRowMarked() {
+    void testCheckBingoP3() {
         card.markSpace( "ob", "oi", "on", "og", "oo");
 
         assertTrue(BingoRowPattern.checkBingo(card));
+    }
+
+    @Test 
+    void testCheckBingoP4() {
+        card.markSpace("bb", "bi" , "bn", "bg");
+
+        assertFalse(BingoRowPattern.checkBingo(card));
     }
 }
