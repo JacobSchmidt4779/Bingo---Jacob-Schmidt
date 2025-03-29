@@ -1,8 +1,8 @@
 package Bingo;
 
-public class BingoColumnPattern implements BingoPattern {
-    @Override
-    public boolean checkBingo(BingoCard card) {
+public class BingoColumnPattern {
+
+    public static boolean checkBingo(BingoCard card) {
         BingoCardSpace[][] spaces = card.getSpaces();
 
         for (int col = 0; col < spaces.length; col++) {
@@ -14,7 +14,7 @@ public class BingoColumnPattern implements BingoPattern {
         return false;
     }
 
-    private boolean checkCol(int col, BingoCardSpace[][] spaces) {
+    private static boolean checkCol(int col, BingoCardSpace[][] spaces) {
 
         for (int row = 0; row < spaces.length; row++) {
             if (!spaces[row][col].isMarked()) {
