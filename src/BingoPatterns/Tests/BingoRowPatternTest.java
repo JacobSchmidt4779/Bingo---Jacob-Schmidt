@@ -1,4 +1,4 @@
-package BingoPatterns;
+package BingoPatterns.Tests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Bingo.BingoCard;
+import BingoPatterns.BingoRowPattern;
 
 public class BingoRowPatternTest {
     BingoCard card;
