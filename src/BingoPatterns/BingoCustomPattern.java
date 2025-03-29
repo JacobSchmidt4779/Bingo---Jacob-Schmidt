@@ -45,7 +45,7 @@ public class BingoCustomPattern {
         return true;
     }
 
-    public void addCoordinates(Coordinate... args) {
+    public void addCoords(Coordinate... args) {
         for (Coordinate target : args) {
             patternCoordinates.add(target);
         }
