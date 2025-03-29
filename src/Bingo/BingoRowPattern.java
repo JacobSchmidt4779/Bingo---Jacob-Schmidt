@@ -1,7 +1,7 @@
 package Bingo;
 
-public class BingoRowPattern implements BingoPattern {
-    @Override
+public class BingoRowPattern {
+    
     public static boolean checkBingo(BingoCard card) {
         BingoCardSpace[][] spaces = card.getSpaces();
 
