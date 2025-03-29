@@ -118,28 +118,6 @@ public class BingoCard {
         return card;
     }
 
-    // This will now be handled by a different class
-    // public boolean checkBingo() {
-    //     for (int row = 0; row < spaces.length; row++) {
-    //         boolean res = true;
-    //         for (int col = 0; col < spaces[0].length; col++) {
-    //             res = res && x[row][col];
-    //         }
-    //         if (res) return res;
-    //     }
-        
-    //     if (markedSpots[0][0] || markedSpots[4][0]) {
-    //         boolean downward = true;
-    //         boolean upward = true;
-    //         for(int i = 1; i < markedSpots.length; i++){
-    //             downward = downward && markedSpots[i][i];
-    //             upward = upward && markedSpots[i][4 - i];
-    //         }
-    //         return downward || upward;
-    //     }
-    //     return false;
-    // }
-
     /* 
      * Method to mark a spot on a bingo card
      * @param int row - row that contains the spot to mark
@@ -180,10 +158,10 @@ public class BingoCard {
         return res;
     }
 
-    // private static char getCharForNum(int num) {
-    //     num = (int) (num / 15.1);
-    //     return ("BINGO").charAt(num);
-    // }
+    private static char getCharForNum(int num) {
+        num = (int) (num / 15.1);
+        return ("BINGO").charAt(num);
+    }
 
     private static char getCharForCol(int col){
         return ("BINGO").charAt(col);
@@ -219,9 +197,9 @@ public class BingoCard {
         return String.format("%-2d", spaces[row][col].getNumber());
     }
 
-    // public static String numToString(int num) {
-    //     return getCharForNum(num) + "" + num;
-    // }
+    public static String numToString(int num) {
+        return getCharForNum(num) + "" + num;
+    }
 
     /* 
      * Convenience method to convert a row of integers to a formatted String to improve appearance when printed
