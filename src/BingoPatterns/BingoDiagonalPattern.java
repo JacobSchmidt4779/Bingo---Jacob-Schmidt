@@ -19,6 +19,7 @@ public class BingoDiagonalPattern {
 
             return downward || upward;
         }
+        
         return false;
     }
 }
