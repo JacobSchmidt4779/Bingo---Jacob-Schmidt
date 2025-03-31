@@ -11,6 +11,7 @@ import BingoPatterns.BingoColumnPattern;
 
 public class BingoColumnPatternTest {
     BingoCard card;
+    BingoColumnPattern pattern;
 
     @BeforeEach
     public void setup() {
@@ -20,40 +21,41 @@ public class BingoColumnPatternTest {
             7, 27, 45, 58, 72,
             15, 16, 41, 46, 75,
             1, 30, 31, 52, 63);
+        pattern = new BingoColumnPattern();
     }
 
     @Test
     void testCheckBingoP5() {
         card.markSpace("bb", "ib" , "nb", "gb", "ob");
         
-        assertTrue(BingoColumnPattern.checkBingo(card));
+        assertTrue(pattern.checkBingo(card));
     }
 
     @Test
     void testCheckBingoP6() {
         card.markSpace("bg", "ig" , "ng", "gg", "og");
         
-        assertTrue(BingoColumnPattern.checkBingo(card));
+        assertTrue(pattern.checkBingo(card));
     }
 
     @Test
     void testCheckBingoP7() {
         card.markSpace("bo", "io" , "no", "go", "oo");
         
-        assertTrue(BingoColumnPattern.checkBingo(card));
+        assertTrue(pattern.checkBingo(card));
     }
 
     @Test
     void testCheckBingoP8() {
         card.markSpace("bb", "bi" , "bn", "bg", "bo");
         
-        assertFalse(BingoColumnPattern.checkBingo(card));
+        assertFalse(pattern.checkBingo(card));
     }
 
     @Test
     void testCheckBingoP9() {
         card.markSpace("bi", "ni", "gi", "oi");
         
-        assertFalse(BingoColumnPattern.checkBingo(card));
+        assertFalse(pattern.checkBingo(card));
     }
 }

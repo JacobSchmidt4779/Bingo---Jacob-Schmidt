@@ -3,9 +3,10 @@ package BingoPatterns;
 import Bingo.BingoCard;
 import Bingo.BingoCardSpace;
 
-public class BingoColumnPattern {
+public class BingoColumnPattern extends BingoPattern {
 
-    public static boolean checkBingo(BingoCard card) {
+    @Override
+    public boolean checkBingo(BingoCard card) {
         BingoCardSpace[][] spaces = card.getSpaces();
 
         for (int col = 0; col < spaces.length; col++) {

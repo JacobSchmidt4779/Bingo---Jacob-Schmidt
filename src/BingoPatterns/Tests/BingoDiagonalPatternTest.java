@@ -11,6 +11,7 @@ import BingoPatterns.BingoDiagonalPattern;
 
 public class BingoDiagonalPatternTest {
     BingoCard card;
+    BingoDiagonalPattern pattern;
 
     @BeforeEach
     public void setup() {
@@ -20,26 +21,27 @@ public class BingoDiagonalPatternTest {
             7, 27, 45, 58, 72,
             15, 16, 41, 46, 75,
             1, 30, 31, 52, 63);
+        pattern = new BingoDiagonalPattern();
     }
 
     @Test
     void testCheckBingoP10() {
         card.markSpace("bb", "ii" , "nn", "gg", "oo");
         
-        assertTrue(BingoDiagonalPattern.checkBingo(card));
+        assertTrue(pattern.checkBingo(card));
     }
 
     @Test
     void testCheckBingoP11() {
         card.markSpace("bo", "ig" , "nn", "gi", "ob");
         
-        assertTrue(BingoDiagonalPattern.checkBingo(card));
+        assertTrue(pattern.checkBingo(card));
     }
 
     @Test
     void testCheckBingoP12() {
         card.markSpace("bi", "ii" , "ni", "gi", "oi");
         
-        assertFalse(BingoDiagonalPattern.checkBingo(card));
+        assertFalse(pattern.checkBingo(card));
     }
 }

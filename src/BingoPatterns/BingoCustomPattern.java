@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 import Bingo.BingoCard;
 
-public class BingoCustomPattern {
+public class BingoCustomPattern extends BingoPattern {
 
     private class Coordinate {
         private int row;
@@ -48,6 +48,7 @@ public class BingoCustomPattern {
         }
     }
 
+    @Override
     public boolean checkBingo(BingoCard card) {
         for (Coordinate target : patternCoordinates) {
             if (!card.isSpaceMarkedAt(target.row, target.col)) {
