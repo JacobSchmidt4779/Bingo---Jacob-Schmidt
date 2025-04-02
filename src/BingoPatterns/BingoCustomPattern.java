@@ -6,6 +6,25 @@ import java.util.regex.Pattern;
 import Bingo.BingoCard;
 
 public class BingoCustomPattern extends BingoPattern {
+    public enum DefaultPattern {
+        T_PATTERN(
+            new String[] { 
+                "bb", "bi", "bn", "bg", "bo", "in", "nn", "gn", "on"
+            }
+        ),
+
+        SQUARE_PATTERN(
+            new String[] {
+                "bb", "bi", "bn", "bg", "bo", "ib", "nb", "gb", "ob", "oi", "on", "og", "oo", "go", "no", "io"
+            }
+        );
+
+        public final String[] value;
+
+        private DefaultPattern(String[] value) {
+            this.value = value;
+        }
+    }
 
     private class Coordinate {
         private int row;
@@ -15,12 +34,26 @@ public class BingoCustomPattern extends BingoPattern {
             row = setRow;
             col = setCol;
         }
+
+        public Coordinate(String rowCol) {
+            rowCol = rowCol.trim().toUpperCase();
+
+            if (Pattern.matches("^\s*[BINGO][BINGO]\s*$", rowCol)) {
+                this.row = BingoCard.charToCol(rowCol.charAt(0));
+                this.col = BingoCard.charToCol(rowCol.charAt(1));
+            }
+        }
     }
 
     private ArrayList<Coordinate> patternCoordinates;
 
     public BingoCustomPattern() {
         patternCoordinates = new ArrayList<Coordinate>();
+    }
+
+    public BingoCustomPattern(String[] coordinates) {
+        patternCoordinates = new ArrayList<Coordinate>();
+        this.addCoords(coordinates);
     }
     
     @Override
@@ -53,13 +86,7 @@ public class BingoCustomPattern extends BingoPattern {
     }
 
     public void addCoord(String rowCol) {
-        rowCol = rowCol.trim().toUpperCase();
-
-        if (Pattern.matches("^\s*[BINGO][BINGO]\s*$", rowCol)) {
-            int row = BingoCard.charToCol(rowCol.charAt(0));
-            int col = BingoCard.charToCol(rowCol.charAt(1));
-            patternCoordinates.add(new Coordinate(row, col));
-        }
+        patternCoordinates.add(new Coordinate(rowCol));
     }
 
     public void addCoords(String... rowCol) {
