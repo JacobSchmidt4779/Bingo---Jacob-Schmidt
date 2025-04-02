@@ -8,11 +8,13 @@ import java.util.regex.Pattern;
 
 import BingoPatterns.BingoColumnPattern;
 import BingoPatterns.BingoDiagonalPattern;
+import BingoPatterns.BingoManager;
 import BingoPatterns.BingoRowPattern;
 
 public class BingoGame {
     private ArrayList<Integer> calledNums;  // ArrayList to hold all previously called numbers
     private ArrayList<BingoCard> cards;     // ArrayList to hold 1 to 4
+    private BingoManager manager;
 
     /* 
      * Default Constructor
@@ -20,6 +22,10 @@ public class BingoGame {
     public BingoGame() {
         this.calledNums = new ArrayList<Integer>();
         this.cards = new ArrayList<BingoCard>();
+        this.manager = new BingoManager();
+        this.manager.addPattern(new BingoRowPattern());
+        this.manager.addPattern(new BingoColumnPattern());
+        this.manager.addPattern(new BingoDiagonalPattern());
     }
 
     public void StartGame() {
@@ -99,13 +105,7 @@ public class BingoGame {
                 ans = scan.nextLine().trim().toUpperCase();
             }
             if (ans.equals("BINGO")) {
-                if (
-                        !BingoRowPattern.checkBingo(cards.get(i))
-                        &&
-                        !BingoColumnPattern.checkBingo(cards.get(i))
-                        &&
-                        !BingoDiagonalPattern.checkBingo(cards.get(i))
-                    ) {
+                if (manager.checkBingo(cards.get(i))) {
                     System.out.println("Card does not have bingo! Card discarded...Continuing with next card");
                     cards.remove(i);
                     i--;
@@ -153,12 +153,7 @@ public class BingoGame {
 
         while (!ans.equals("QUIT")){
             if (ans.equals("BINGO")) {
-                if (
-                    !BingoRowPattern.checkBingo(card)
-                    &&
-                    !BingoColumnPattern.checkBingo(card)
-                    &&
-                    !BingoDiagonalPattern.checkBingo(card)) {
+                if (manager.checkBingo(card)) {
                     System.out.println("Card does not have bingo!");
                 }
                 else {
