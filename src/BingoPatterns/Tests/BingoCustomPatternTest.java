@@ -27,7 +27,7 @@ public class BingoCustomPatternTest {
 
     @Test
     void testCheckBingoP13() {
-        pattern.addCoords("bb", "bi", "bn", "bg", "bo", "in", "nn", "gn", "on");
+        pattern.addCoords(BingoCustomPattern.DefaultPattern.T_PATTERN.value);
         card.markSpace("bb", "bi", "bn", "bg", "bo", "in", "nn", "gn", "on");
 
         assertTrue(pattern.checkBingo(card));
@@ -35,7 +35,7 @@ public class BingoCustomPatternTest {
 
     @Test
     void testCheckBingoP14() {
-        pattern.addCoords("bb", "bi", "bn", "bg", "bo", "in", "nn", "gn", "on");
+        pattern.addCoords(BingoCustomPattern.DefaultPattern.T_PATTERN.value);
 
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 5; col++) {
@@ -48,7 +48,7 @@ public class BingoCustomPatternTest {
 
     @Test
     void testCheckBingoP15() {
-        pattern.addCoords("bb", "bi", "bn", "bg", "bo", "in", "nn", "gn", "on");
+        pattern.addCoords(BingoCustomPattern.DefaultPattern.T_PATTERN.value);
         card.markSpace("bb", "bi", "bn", "bg", "bo", "in", "gn", "on");
 
         assertFalse(pattern.checkBingo(card));
@@ -56,7 +56,7 @@ public class BingoCustomPatternTest {
 
     @Test
     void testCheckBingoP16() {
-        pattern.addCoords("bb", "bi", "bn", "bg", "bo", "ib", "nb", "gb", "ob", "oi", "on", "og", "oo", "go", "no", "io");
+        pattern.addCoords(BingoCustomPattern.DefaultPattern.SQUARE_PATTERN.value);
         card.markSpace("bb", "bi", "bn", "bg", "bo", "ib", "nb", "gb", "ob", "oi", "on", "og", "oo", "go", "no", "io");
 
         assertTrue(pattern.checkBingo(card));
@@ -64,7 +64,7 @@ public class BingoCustomPatternTest {
 
     @Test
     void testCheckBingoP17() {
-        pattern.addCoords("bb", "bi", "bn", "bg", "bo", "ib", "nb", "gb", "ob", "oi", "on", "og", "oo", "go", "no", "io");
+        pattern.addCoords(BingoCustomPattern.DefaultPattern.SQUARE_PATTERN.value);
         
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 4; col++) {
@@ -78,7 +78,7 @@ public class BingoCustomPatternTest {
 
     @Test
     void testCheckBingoP18() {
-        pattern.addCoords("bb", "bi", "bn", "bg", "bo", "ib", "nb", "gb", "ob", "oi", "on", "og", "oo", "go", "no", "io");
+        pattern.addCoords(BingoCustomPattern.DefaultPattern.SQUARE_PATTERN.value);
         
         for (int row = 1; row < 5; row++) {
             for (int col = 0; col < 5; col++) {
