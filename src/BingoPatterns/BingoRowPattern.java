@@ -18,6 +18,20 @@ public class BingoRowPattern extends BingoPattern {
         return false;
     }
 
+    @Override
+    public int numberOfBingos(BingoCard card) {
+        BingoCardSpace[][] spaces = card.getSpaces();
+        int bingoCount = 0;
+
+        for (int row = 0; row < spaces.length; row++) {
+            if (checkRow(spaces[row])) {
+                bingoCount++;
+            }
+        }
+
+        return bingoCount;
+    }
+
     private static boolean checkRow(BingoCardSpace[] row) {
 
         for (int col = 0; col < row.length; col++) {

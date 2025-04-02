@@ -22,6 +22,26 @@ public class BingoCustomPattern extends BingoPattern {
     public BingoCustomPattern() {
         patternCoordinates = new ArrayList<Coordinate>();
     }
+    
+    @Override
+    public boolean checkBingo(BingoCard card) {
+        for (Coordinate target : patternCoordinates) {
+            if (!card.isSpaceMarkedAt(target.row, target.col)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int numberOfBingos(BingoCard card) {
+        for (Coordinate target : patternCoordinates) {
+            if (!card.isSpaceMarkedAt(target.row, target.col)) {
+                return 0;
+            }
+        }
+        return 1;
+    }
 
     public boolean addCoord(int row, int col) {
         if (row < 0 || row > 4 || col < 0 || col > 4) {
@@ -46,15 +66,5 @@ public class BingoCustomPattern extends BingoPattern {
         for (String target : rowCol) {
             addCoord(target);
         }
-    }
-
-    @Override
-    public boolean checkBingo(BingoCard card) {
-        for (Coordinate target : patternCoordinates) {
-            if (!card.isSpaceMarkedAt(target.row, target.col)) {
-                return false;
-            }
-        }
-        return true;
     }
 }
