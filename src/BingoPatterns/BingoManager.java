@@ -15,6 +15,16 @@ public class BingoManager {
         patterns.add(pattern);
     }
 
+    public boolean checkBingo(BingoCard card) {
+        for (int i = 0; i < patterns.size(); i++) {
+            if (patterns.get(i).checkBingo(card)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
     public int numberOfBingos(BingoCard card) {
         int bingoCount = 0;
 
