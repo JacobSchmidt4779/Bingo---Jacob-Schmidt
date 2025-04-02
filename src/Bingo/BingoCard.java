@@ -95,27 +95,21 @@ public class BingoCard {
         return cards;
     }
 
-    public BingoCard addNumber(int num) {
-        BingoCard card = new BingoCard();
+    public void addNumber(int num) {
         int col = (int) ((num - 1) / 15);
         
         for (int i = 0; i < spaces.length; i++) {
             if (spaces[i][col].matchNumber(0)) {
-                   spaces[i][col] = new BingoCardSpace(num);
+                spaces[i][col] = new BingoCardSpace(num);
+                return;
             }
         }
-
-        return card;
     }
 
-    public BingoCard addNumber(int... args) {
-        BingoCard card = new BingoCard();
-
+    public void addNumber(int... args) {
         for (int num : args){
-            card = card.addNumber(num);
+            this.addNumber(num);
         }
-
-        return card;
     }
 
     /* 
